@@ -1,7 +1,6 @@
-
-<p align="center" width="100%">
-<a href="" target="_blank">
 # FLASK: Fine-grained Language Model Evaluation Based on Alignment Skill Sets
+
+
 
 ## 对alpaca进行标注
 
@@ -28,10 +27,6 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 This is the official github repository for [FLASK: Fine-grained Language Model Evaluation Based on Alignment Skill Sets](https://arxiv.org/abs/2307.10928).
-
-<p align="center">
-  <img src="assets/overall_fig.png" width="80%" height="80%">
-</p>
 
 
 ## News
