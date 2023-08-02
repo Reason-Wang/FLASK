@@ -1,8 +1,28 @@
 
 <p align="center" width="100%">
 <a href="" target="_blank">
-
 # FLASK: Fine-grained Language Model Evaluation Based on Alignment Skill Sets
+
+## 对alpaca进行标注
+
++ 将项目克隆到本地
+
++ 已经将alpaca_instructions_df.pkl转换成了jsonl形式
+
++ 在openai_info/api.json中设置openai api key(理论上数量越多越快)
+
++ 按照下面命令进行标注（总共约52k数据，默认模型是gpt-4，全部标注估计需要1千多刀）
+
+  ```bash
+  cd metadata_annotation/skillset/
+  python skillset_annotation.py -q ../../input_data/alpaca_instructions.jsonl
+  ```
+
+
+
+
+
+
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)

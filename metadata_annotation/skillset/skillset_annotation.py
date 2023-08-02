@@ -4,7 +4,9 @@ import argparse
 import json
 import os
 import time
-
+# import os
+# os.environ["HTTPS_PROXY"] = "http://127.0.0.1:10809"
+# os.environ["HTTP_PROXY"] = "http://127.0.0.1:10809"
 import tqdm
 import re
 import shortuuid

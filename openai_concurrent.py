@@ -3,7 +3,9 @@ from concurrent.futures import ProcessPoolExecutor
 import argparse
 
 import openai
-
+# import os
+# os.environ["HTTPS_PROXY"] = "http://127.0.0.1:10809"
+# os.environ["HTTP_PROXY"] = "http://127.0.0.1:10809"
 from time import sleep
 import random
 import json
