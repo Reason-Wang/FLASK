@@ -85,6 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--reviewer-file', default='src/reviewer.jsonl')
     parser.add_argument('-o', '--output-review-file', default='outputs/flask_skillset_annotation.jsonl')
     parser.add_argument('-e', '--output-error-file', default='outputs/flask_skillset_annotation_error.jsonl')
+    parser.add_argument('-m', '--model', default='gpt-4')
     parser.add_argument('--max-tokens', type=int, default=1024, help='maximum number of tokens produced in the output')
     args = parser.parse_args()
 
@@ -119,7 +120,7 @@ if __name__ == '__main__':
                 'question_id': question_jsons[i]['question_id'],
                 'metadata': {},
                 'request': {
-                    "model": "gpt-4",
+                    "model": args.model,
                     "messages":[
                         {
                             'role': 'system',
