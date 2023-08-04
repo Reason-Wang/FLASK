@@ -10,7 +10,7 @@ from time import sleep
 import random
 import json
 
-import fcntl
+# import fcntl
 
 from typing import List
 import os
@@ -64,14 +64,14 @@ class OpenAIChatCompletionConcurrent:
             temperature=temperature,
             max_tokens=max_tokens,
         )
-        
+
 
     def create_many(self, requests: List[dict]):
 
         futures = []
         with ProcessPoolExecutor(max_workers=self.num_workers) as executor:
             for item_index, item in enumerate(requests):
-                api_key = self.api_keys[item_index % self.num_api_keys]    
+                api_key = self.api_keys[item_index % self.num_api_keys]
                 future = executor.submit(call_and_return, api_key=api_key, item=item)
                 futures.append(future)
                 sleep(self.time_between_requests)
