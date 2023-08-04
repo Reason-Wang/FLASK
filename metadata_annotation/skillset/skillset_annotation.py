@@ -13,8 +13,8 @@ import shortuuid
 import ast
 import logging
 import random
-from openai_concurrent import OpenAIChatCompletionConcurrent
-
+# from openai_concurrent import OpenAIChatCompletionConcurrent
+from openai_requests import request_all
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     skills_jsons = get_json_list(args.skillset_file)
     reviewer_jsons = get_json_list(args.reviewer_file)
     prompt_jsons = get_json_list(args.prompt_file)
-
+    # question_jsons = question_jsons[:100]
 
     handles = []
     review_jsons = []
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     for i in question_idx_list:
         question_copy.append(question_jsons[i])
         sys_prompt, prompt = gen_prompt(reviewer_jsons, prompt_jsons, skills_jsons, question_jsons[i], index_list)
-        print(prompt)
+        # print(prompt)
         review_id = shortuuid.uuid()
         review_jsons.append({
             'review_id': review_id,
@@ -136,8 +136,10 @@ if __name__ == '__main__':
             }
         )
 
-    openai_concurrent = OpenAIChatCompletionConcurrent(api_keys=key_jsons["api_keys"], requests_per_minute=60, expected_response_seconds=5)
-    responses, fails = openai_concurrent.create_many(requests)
+    responses, fails = request_all(api_keys=key_jsons["api_keys"], requests=requests)
+    # openai_concurrent = OpenAIChatCompletionConcurrent(api_keys=key_jsons["api_keys"], requests_per_minute=30, expected_response_seconds=1)
+    # responses, fails = openai_concurrent.create_many(requests)
+
 
     reviews = [response['response']['choices'][0]['message']['content'] for response in responses]
     total_tokens = [response['response']['usage']['total_tokens'] for response in responses]
