@@ -6,9 +6,9 @@
 
 + 将项目克隆到本地
 
-+ 已经将alpaca_instructions_df.pkl转换成了jsonl形式
++ 运行convert_dataframe_to_jsonl.ipynb，生成jsonl数据
 
-+ 在openai_info/api.json中设置openai api key(理论上数量越多越快)
++ 在openai_info/api.json中设置openai api key
 
 + 按照下面命令进行标注（总共约52k数据，默认模型是gpt-4，全部标注估计需要1千多刀）
 
