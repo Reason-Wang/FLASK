@@ -1,3 +1,4 @@
+import pickle
 import sys
 sys.path.append("../../")
 import argparse
@@ -87,7 +88,7 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--output-error-file', default='outputs/flask_skillset_annotation_error.jsonl')
     parser.add_argument('-m', '--model', default='gpt-4')
     parser.add_argument('--start', type=int, default=0)
-    parser.add_argument('--end', type=int, default=None)
+    parser.add_argument('--end', type=int, default=52000)
     parser.add_argument('--max-tokens', type=int, default=1024, help='maximum number of tokens produced in the output')
     args = parser.parse_args()
 
@@ -139,7 +140,14 @@ if __name__ == '__main__':
             }
         )
 
-    responses, fails = request_all(api_keys=key_jsons["api_keys"], requests=requests)
+    # Save cache file
+    cache_dir = f'start_{args.start}_end_{args.end}'
+    if not os.path.exists(cache_dir):
+        os.makedirs(cache_dir)
+    with open(cache_dir+'/index_list.pkl', 'wb') as f:
+        pickle.dump(index_list, f)
+    cache_file_name = cache_dir+'/cache_file.jsonl'
+    responses, fails = request_all(api_keys=key_jsons["api_keys"], requests=requests, cache_file=cache_file_name)
     # openai_concurrent = OpenAIChatCompletionConcurrent(api_keys=key_jsons["api_keys"], requests_per_minute=30, expected_response_seconds=1)
     # responses, fails = openai_concurrent.create_many(requests)
 
