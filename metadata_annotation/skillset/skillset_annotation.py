@@ -86,6 +86,8 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output-review-file', default='outputs/flask_skillset_annotation.jsonl')
     parser.add_argument('-e', '--output-error-file', default='outputs/flask_skillset_annotation_error.jsonl')
     parser.add_argument('-m', '--model', default='gpt-4')
+    parser.add_argument('--start', type=int, default=0)
+    parser.add_argument('--end', type=int, default=None)
     parser.add_argument('--max-tokens', type=int, default=1024, help='maximum number of tokens produced in the output')
     args = parser.parse_args()
 
@@ -94,7 +96,7 @@ if __name__ == '__main__':
     skills_jsons = get_json_list(args.skillset_file)
     reviewer_jsons = get_json_list(args.reviewer_file)
     prompt_jsons = get_json_list(args.prompt_file)
-    # question_jsons = question_jsons[:100]
+    question_jsons = question_jsons[args.start:args.end]
 
     handles = []
     review_jsons = []
@@ -145,6 +147,9 @@ if __name__ == '__main__':
     reviews = [response['response']['choices'][0]['message']['content'] for response in responses]
     total_tokens = [response['response']['usage']['total_tokens'] for response in responses]
     print("total_token:", sum(total_tokens))
+
+    args.output_error_file = f'start_{args.start}_end_{args.end}/'+args.output_error_file
+    args.output_review_file = f'start_{args.start}_end_{args.end}/' + args.output_review_file
 
     output_directory = os.path.dirname(args.output_error_file)
 
